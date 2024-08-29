@@ -1,4 +1,4 @@
-/* Problem
+/* Problem 
 Indexes of Subarray Sum
 Difficulty: MediumAccuracy: 16.5%Submissions: 1.6MPoints: 4
 Given an unsorted array arr of size n that contains only non negative integers, find a sub-array (continuous elements) that has sum equal to s. You mainly need to return the left and right indexes(1-based indexing) of that subarray.
