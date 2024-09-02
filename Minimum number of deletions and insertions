@@ -1,0 +1,61 @@
+/* Minimum number of deletions and insertions.
+Difficulty: MediumAccuracy: 65.29%Submissions: 47K+Points: 4
+Given two strings str1 and str2. The task is to remove or insert the minimum number of characters from/in str1 so as to transform it into str2. It could be possible that the same character needs to be removed/deleted from one point of str1 and inserted to some another point.
+
+Examples :
+
+Input: str1 = "heap", str2 = "pea"
+Output: 3
+Explanation: 2 deletions and 1 insertion.
+p and h deleted from heap. Then, p is inserted at the beginning.
+One thing to note, though p was required yet it was removed/deleted first from its position and then it is inserted to some other position. Thus, p contributes one to the deletion_count and one to the insertion_count.
+Input : str1 = "geeksforgeeks", str2 = "geeks"
+Output: 8
+Explanation: 8 deletions, i.e. remove all characters of the string "forgeeks".
+Expected Time Complexity: O(|str1|*|str2|)
+Expected Space Complexity: O(|str1|*|str2|)
+
+Constraints:
+1 ≤ |str1|, |str2| ≤ 1000
+All the characters are lowercase English alphabets */
+
+class Solution{
+		
+
+	public:
+	int minOperations(string str1, string str2) 
+	{ 
+	    // Your code goes here
+	    // create two dimensional matrix len1 x len2
+	    // each cell represent the longest matching string of str1 in str2
+	    // the matrix is 1 based in order to use 0 length
+	    int n = str1.size();
+	    int m = str2.size();
+	    vector<vector<int>> vc(n+1, vector<int>(m+1, 0));
+	    
+	    // i - loop through characters of str1
+	    for(int i=0; i<n; i++)
+	    {
+	        // j - loop through characters of str2
+	        for(int j=0; j<m; j++)
+	        {
+	            // when characters equal, increase longest common subsequence
+	            if(str1[i] == str2[j])
+	            {
+	                vc[i+1][j+1] = vc[i][j] + 1;
+	            }
+	            // when characters not equal, choose greater chiose
+	            // vc[i+1][j] means deletion (not using character i of str1)
+	            // vc[i][j+1] means insertion (adding character j of str2)
+	            else
+	            {
+	                vc[i+1][j+1] = max(vc[i+1][j], vc[i][j+1]);
+	            }
+	        }
+	    }
+	    // vc[n][m] is LCS (longest common subsequence)
+	    // characters to insert n - LCS
+	    // characters to delete m - LCS
+	    return n - vc[n][m] + m - vc[n][m];
+	} 
+};
