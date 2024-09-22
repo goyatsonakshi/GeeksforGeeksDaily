@@ -1,0 +1,55 @@
+/*
+Longest Prefix Suffix
+Difficulty: HardAccuracy: 27.91%Submissions: 122K+Points: 8
+Given a string of characters, find the length of the longest proper prefix which is also a proper suffix.
+
+NOTE: Prefix and suffix can be overlapping but they should not be equal to the entire string.
+
+Examples :
+
+Input: str = "abab"
+Output: 2
+Explanation: "ab" is the longest proper prefix and suffix. 
+Input: str = "aaaa"
+Output: 3
+Explanation: "aaa" is the longest proper prefix and suffix. 
+Expected Time Complexity: O(|str|)
+Expected Auxiliary Space: O(|str|)
+
+Constraints:
+1 ≤ |str| ≤ 106
+str contains lower case English alphabets
+*/
+
+class Solution {
+  public:
+    int lps(string str) {
+        // Your code goes here
+         int n = str.size();
+    vector<int> ans(n,0);
+    int i = 0;
+    int j = 1;
+    
+    while(j != n){
+         // case 1 : Both are same
+         if(str[i] == str[j]){
+            ans[j] = i + 1;
+            i++;
+            j++;
+         }
+           // case 2 : Both are not same
+          else{
+              // case 1: i == 0
+              if(i ==0){
+                  ans[j] = 0;
+                  j++;
+              }
+              //case 2 : i!=0
+              else{
+                  i = ans[i - 1];
+              }
+          }
+    }
+  return ans.back();
+    }
+};
