@@ -1,0 +1,57 @@
+/*
+Sort a k sorted doubly linked list
+Difficulty: EasyAccuracy: 55.57%Submissions: 12K+Points: 2
+Given a doubly linked list, each node is at most k-indices away from its target position. The problem is to sort the given doubly linked list. The distance can be assumed in either of the directions (left and right).
+
+Examples :
+
+Input: Doubly Linked List : 3 <-> 2 <-> 1 <-> 5 <-> 6 <-> 4 , k = 2
+Output: 1 <-> 2 <-> 3 <-> 4 <-> 5 <-> 6
+
+Explanation: After sorting the given 2-sorted list is 1 <-> 2 <-> 3 <-> 4 <-> 5 <-> 6.
+Input: Doubly Linked List : 5 <-> 6 <-> 7 <-> 3 <-> 4 <-> 4 , k = 3
+Output: 3 <-> 4 <-> 4 <-> 5 <-> 6 <-> 7
+
+Explanation: After sorting the given 3-sorted list is 3 <-> 4 <-> 4 <-> 5 <-> 6 <-> 7.
+Expected Time Complexity: O(n*logk)
+Expected Auxiliary Space: O(k)
+Constraints:
+1 <= number of nodes <= 105
+1 <= k < number of nodes
+1 <= node->data <= 109
+*/
+
+class Solution {
+  public:
+    // function to sort a k sorted doubly linked list
+    DLLNode *sortAKSortedDLL(DLLNode *head, int k) {
+        // code here
+         if(head==NULL) return head;
+        priority_queue<int,vector<int>,greater<int>>pq;
+        int i=0;
+        while(i<k+1 && head!=NULL){
+            pq.push(head->data);
+            head=head->next;
+            i++;
+        }
+        DLLNode *temp=new DLLNode(-1);
+        DLLNode *prevs=new DLLNode(NULL);
+        DLLNode *ans=temp;
+        temp->prev=prevs;
+        
+        while(!pq.empty()){
+            int k=pq.top();
+            pq.pop();
+            temp->next=new DLLNode(k);
+            prevs=temp;
+            temp=temp->next;
+            temp->prev=prevs;
+            if(head!=NULL)pq.push(head->data);
+           if(head!=NULL) head=head->next;
+            
+        }
+        
+        return ans->next;
+        
+    }
+};
